@@ -111,7 +111,7 @@ def get_trader_detail_figures(trader_domain: business.Trader,
                 df['color'] = df['order_type'].apply(lambda x: order_type_color(x))
             print(df.tail())
 
-            data, layout = security_factor.draw_pipe(render=None, annotation_df=df, height=620)
+            data, layout = security_factor.draw_factor(render=None, annotation_df=df, height=620)
             if trader_domain.real_time:
                 result = get_current_price(entity_ids=[entity_id])
                 bid_ask = result.get(entity_id)

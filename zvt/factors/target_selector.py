@@ -7,11 +7,11 @@ import pandas as pd
 from pandas import DataFrame
 
 from zvt.contract import IntervalLevel
-from zvt.utils.pd_utils import index_df, pd_is_not_null
-from zvt.utils.time_utils import to_pd_timestamp, now_pd_timestamp
-from zvt.schemas.meta.stock_meta import Stock, Etf, Block, Index
 from zvt.drawer.drawer import Drawer
 from zvt.factors.factor import FilterFactor, ScoreFactor, Factor
+from zvt.schemas.meta.stock_meta import Stock, Etf, Block, Index
+from zvt.utils.pd_utils import index_df, pd_is_not_null
+from zvt.utils.time_utils import to_pd_timestamp, now_pd_timestamp
 
 
 class TargetType(Enum):
@@ -112,7 +112,7 @@ class TargetSelector(object):
         if self.filter_factors:
             musts = []
             for factor in self.filter_factors:
-                df = factor.get_result_df()
+                df = factor.result_df
 
                 if not pd_is_not_null(df):
                     raise Exception('no data for factor:{},{}'.format(factor.factor_name, factor))
@@ -130,7 +130,7 @@ class TargetSelector(object):
         if self.score_factors:
             scores = []
             for factor in self.score_factors:
-                df = factor.get_result_df()
+                df = factor.result_df
                 if not pd_is_not_null(df):
                     raise Exception('no data for factor:{],{}'.format(factor.factor_name, factor))
 

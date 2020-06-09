@@ -37,7 +37,7 @@ class TechnicalFactor(Factor):
         self.data_schema = get_kdata_schema(entity_schema.__name__, level=level)
 
         if transformer:
-            self.indicator_cols = transformer.indicator_cols
+            self.indicator_cols = transformer.indicators
 
         super().__init__(self.data_schema, entity_schema, provider, entity_provider, entity_ids, exchanges, codes,
                          the_timestamp, start_timestamp, end_timestamp, columns, filters, order, limit, level,
@@ -65,12 +65,12 @@ if __name__ == '__main__':
                              end_timestamp='2019-06-10',
                              transformer=MacdTransformer())
 
-    print(factor.get_factor_df().tail())
+    print(factor.factor_df.tail())
 
     factor.move_on(to_timestamp='2019-06-17')
-    diff = factor.get_factor_df()['diff']
-    dea = factor.get_factor_df()['dea']
-    macd = factor.get_factor_df()['macd']
+    diff = factor.factor_df['diff']
+    dea = factor.factor_df['dea']
+    macd = factor.factor_df['macd']
 
     assert round(diff.loc[('stock_sz_000338', '2019-06-17')], 2) == 0.06
     assert round(dea.loc[('stock_sz_000338', '2019-06-17')], 2) == -0.03
